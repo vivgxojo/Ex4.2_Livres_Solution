@@ -25,8 +25,8 @@ namespace Ex4._2_Livres_Solution
             set
             {
                 string chiffres = value.Replace("-", "");
-                if ((chiffres.Length==10 || chiffres.Length == 13)
-                    && !long.TryParse(chiffres, out _))
+                if (!((chiffres.Length==10 || chiffres.Length == 13)
+                    && long.TryParse(chiffres, out _)))
                     throw new ArgumentException("ISBN invalide. Il doit contenir 10 ou 13 chiffres avec ou sans tirets.");
                 _isbn = value;
             }
@@ -83,7 +83,7 @@ namespace Ex4._2_Livres_Solution
 
         public override string ToString()
         {
-            return $"Livre: {Titre} | Auteur: {Auteur} | ISBN: {ISBN} | Prix: {Prix}€ | Pages: {NombrePages} | Année: {AnneePublication}";
+            return $"Livre: {Titre} | Auteur: {Auteur} | ISBN: {ISBN} | Prix: {Prix}$ | Pages: {NombrePages} | Année: {AnneePublication}";
         }
     }
 }

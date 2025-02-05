@@ -47,9 +47,9 @@ namespace TestProjectLivres
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(1000)]
-        public void NombrePages_Valide_AssigneCorrectement(int nombrePagesValide)
+        [InlineData(1, 0)]
+        [InlineData(1000, 8)]
+        public void NombrePages_Valide_AssigneCorrectement(int nombrePagesValide, int x)
         {
             livre.NombrePages = nombrePagesValide;
             Assert.Equal(nombrePagesValide, livre.NombrePages);
@@ -95,7 +95,7 @@ namespace TestProjectLivres
         public void ToString_RetourneFormatAttendu()
         {
             // Arrange
-            Livre livre = new Livre("1234567890", "C# Avancé", "Jean Dupont", 25.99f, 30, 2025);
+            Livre livre = new Livre("1234567890", "C# Avancé", "Jean Dupont", 25.99f, 350, 2025);
 
             // Act
             string resultat = livre.ToString();
