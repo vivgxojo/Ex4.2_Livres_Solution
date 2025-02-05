@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "Ex4.2_Livres_Solution/1.0.0": {
+        "runtime": {
+          "Ex4.2_Livres_Solution.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Ex4.2_Livres_Solution/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

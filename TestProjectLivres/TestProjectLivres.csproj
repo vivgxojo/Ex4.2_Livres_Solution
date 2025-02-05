@@ -17,8 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ex4.2_Livres_Solution.csproj" />
-    <ProjectReference Include="..\Ex4.2_Livres_Solution\Ex4.2_Livres_Solution.csproj" />
+    <ProjectReference Include="..\ProjetLivres\Ex4.2_Livres_Solution.csproj" />
   </ItemGroup>
 
   <ItemGroup>
