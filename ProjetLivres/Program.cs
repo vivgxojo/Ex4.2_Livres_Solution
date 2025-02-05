@@ -42,22 +42,32 @@ void MenuPrincipal()
 }
 
 void AjouterLivre()
-{
-    Console.Write("ISBN : ");
-    string isbn = Console.ReadLine();
-    Console.Write("Titre : ");
-    string titre = Console.ReadLine();
-    Console.Write("Auteur : ");
-    string auteur = Console.ReadLine();
-    Console.Write("Prix : ");
-    float prix = float.Parse(Console.ReadLine());
-    Console.Write("Nombre de pages : ");
-    int pages = int.Parse(Console.ReadLine());
-    Console.Write("Année de publication : ");
-    int annee = int.Parse(Console.ReadLine());
-
+{ 
     try
     {
+        Console.Write("ISBN : ");
+        string isbn = Console.ReadLine();
+        Console.Write("Titre : ");
+        string titre = Console.ReadLine();
+        Console.Write("Auteur : ");
+        string auteur = Console.ReadLine();
+        float prix = -1;
+        do {
+            try
+            {
+                Console.Write("Prix : ");
+                prix = float.Parse(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Le prix doit être un nombre.");
+            }
+        } while (prix == -1);
+        Console.Write("Nombre de pages : ");
+        int pages = int.Parse(Console.ReadLine());
+        Console.Write("Année de publication : ");
+        int annee = int.Parse(Console.ReadLine());
+
         bibliotheque.Add(new Livre(isbn, titre, auteur, prix, pages, annee));
         Console.WriteLine("Livre ajouté avec succès !");
     }
@@ -96,49 +106,66 @@ void ModifierLivre()
 
 void SupprimerLivre()
 {
+    /*
     Console.Write("Entrez l'ISBN du livre à supprimer : ");
     string isbn = Console.ReadLine();
     Livre livre = bibliotheque.FirstOrDefault(l => l.ISBN == isbn);
+    */
 
-    if (livre != null)
+    Livre livre = RechercherLivre()[0];
+    Console.WriteLine("Voulez-vous vraiment suppprimer " + livre.Titre + "(o/n)");
+    string choix = Console.ReadLine();
+    if (livre != null && choix == "o")
     {
         bibliotheque.Remove(livre);
         Console.WriteLine("Livre supprimé avec succès !");
     }
     else
     {
-        Console.WriteLine("Livre non trouvé.");
+        Console.WriteLine("Livre non supprimé.");
     }
 }
 
-void RechercherLivre()
+List<Livre> RechercherLivre()
 {
     Console.Write("Rechercher par (auteur/titre/prix) : ");
     string critere = Console.ReadLine().ToLower();
     List<Livre> resultats = new List<Livre>();
 
+    //TODO : Corriger la fonction de recherche
+
     switch (critere)
     {
         case "auteur":
             Console.Write("Nom de l'auteur : ");
-            string auteur = Console.ReadLine();
-            resultats = bibliotheque.Where(l => l.Auteur.Contains(auteur, StringComparison.OrdinalIgnoreCase)).ToList();
+            string auteur = Console.ReadLine().ToLower();
+            resultats = bibliotheque.FindAll(l => l.Auteur.ToLower().Contains(auteur));
             break;
         case "titre":
             Console.Write("Titre du livre : ");
-            string titre = Console.ReadLine();
-            resultats = bibliotheque.Where(l => l.Titre.Contains(titre, StringComparison.OrdinalIgnoreCase)).ToList();
+            string titre = Console.ReadLine().ToLower();
+            foreach(Livre livre in bibliotheque)
+            {
+                if (livre.Titre.ToLower().Contains(titre))
+                {
+                    resultats.Add(livre);
+                }
+            }
             break;
         case "prix":
             Console.Write("Prix minimum : ");
             float prixMin = float.Parse(Console.ReadLine());
             Console.Write("Prix maximum : ");
             float prixMax = float.Parse(Console.ReadLine());
-            resultats = bibliotheque.Where(l => l.Prix >= prixMin && l.Prix <= prixMax).ToList();
+            foreach(Livre l in bibliotheque)
+            {
+                if (l.Prix >= prixMin && l.Prix <= prixMax)
+                    resultats.Add(l);
+            }
             break;
         default:
             Console.WriteLine("Critère invalide.");
-            return;
+            return null;
     }
 
     Console.WriteLine("\nRésultats :");
@@ -146,6 +173,7 @@ void RechercherLivre()
     {
         Console.WriteLine(livre);
     }
+    return resultats;
 }
 
 void SauvegarderCSV()
